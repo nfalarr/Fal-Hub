@@ -14,18 +14,20 @@ local Config =
         .Config
     )
 
-------------------------------------------------
--- WINDOW
-------------------------------------------------
 
 local UI =
     Window:Create(
         "Fal Hub"
     )
 
-------------------------------------------------
--- TABS
-------------------------------------------------
+UI.Gui.Destroying:Connect(function()
+
+    for key in pairs(Config) do
+
+        Config[key] = false
+    end
+end)
+
 
 local VisualsPage =
     Tabs:Create(
@@ -47,9 +49,6 @@ local SettingsPage =
 
 VisualsPage.Visible = true
 
-------------------------------------------------
--- VISUALS
-------------------------------------------------
 
 Toggle:Create(
     VisualsPage,
@@ -114,9 +113,6 @@ Toggle:Create(
     end
 )
 
-------------------------------------------------
--- GENERAL
-------------------------------------------------
 
 Toggle:Create(
     GeneralPage,
@@ -136,9 +132,6 @@ Toggle:Create(
     end
 )
 
-------------------------------------------------
--- REQUIRE
-------------------------------------------------
 
 require(
     script.Features

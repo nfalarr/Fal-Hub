@@ -14,15 +14,9 @@ local Config =
         .Config
     )
 
-------------------------------------------------
--- CACHE
-------------------------------------------------
 
 local Cache = {}
 
-------------------------------------------------
--- REMOVE
-------------------------------------------------
 
 local function RemoveESP(char)
 
@@ -38,9 +32,6 @@ local function RemoveESP(char)
     end
 end
 
-------------------------------------------------
--- LOOP
-------------------------------------------------
 
 task.spawn(function()
 
@@ -68,6 +59,12 @@ task.spawn(function()
                 local char =
                     plr.Character
 
+                if not char:FindFirstChild(
+                    "HumanoidRootPart"
+                ) then
+                    continue
+                end
+
                 if not Cache[char] then
 
                     local esp =
@@ -90,11 +87,23 @@ task.spawn(function()
                         Enum.HighlightDepthMode
                         .AlwaysOnTop
 
-                    esp.Parent = char
+                    esp.Adornee = char
+                    esp.Parent = game.CoreGui
 
                     Cache[char] = esp
                 end
             end
         end
+
+        for char in pairs(Cache) do
+
+            if not char
+            or not char.Parent then
+
+                RemoveESP(char)
+            end
+        end
     end
 end)
+
+return true

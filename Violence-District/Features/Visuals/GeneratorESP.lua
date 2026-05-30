@@ -6,22 +6,20 @@ local Config =
         .Config
     )
 
-------------------------------------------------
--- CACHE
-------------------------------------------------
 
 local Cache = {}
 local Connection
 
-------------------------------------------------
--- REMOVE
-------------------------------------------------
 
 local function RemoveESP(obj)
 
     local data = Cache[obj]
 
     if data then
+
+        pcall(function()
+            data.Connection:Disconnect()
+        end)
 
         pcall(function()
             data.Highlight:Destroy()
@@ -35,13 +33,14 @@ local function RemoveESP(obj)
     end
 end
 
-------------------------------------------------
--- CREATE
-------------------------------------------------
 
 local function CreateESP(obj)
 
     if Cache[obj] then
+        return
+    end
+
+    if not obj.Parent then
         return
     end
 
@@ -55,7 +54,7 @@ local function CreateESP(obj)
         return
     end
 
-    if progress >= 100 then
+    if progress >= 99.5 then
         return
     end
 
@@ -71,9 +70,6 @@ local function CreateESP(obj)
         return
     end
 
-    ------------------------------------------------
-    -- HIGHLIGHT
-    ------------------------------------------------
 
     local esp =
         Instance.new("Highlight")
@@ -93,11 +89,9 @@ local function CreateESP(obj)
         Enum.HighlightDepthMode
         .AlwaysOnTop
 
-    esp.Parent = obj
+    esp.Adornee = obj
+    esp.Parent = game.CoreGui
 
-    ------------------------------------------------
-    -- GUI
-    ------------------------------------------------
 
     local gui =
         Instance.new(
@@ -116,9 +110,6 @@ local function CreateESP(obj)
     gui.Adornee = part
     gui.Parent = part
 
-    ------------------------------------------------
-    -- BG
-    ------------------------------------------------
 
     local bg =
         Instance.new("Frame")
@@ -135,6 +126,7 @@ local function CreateESP(obj)
             15
         )
 
+    bg.BackgroundTransparency = 0.05
     bg.BorderSizePixel = 0
 
     Instance.new(
@@ -143,9 +135,6 @@ local function CreateESP(obj)
     ).CornerRadius =
         UDim.new(1,0)
 
-    ------------------------------------------------
-    -- STROKE
-    ------------------------------------------------
 
     local stroke =
         Instance.new(
@@ -161,9 +150,8 @@ local function CreateESP(obj)
             40
         )
 
-    ------------------------------------------------
-    -- TEXT
-    ------------------------------------------------
+    stroke.Thickness = 1
+
 
     local txt =
         Instance.new(
@@ -184,26 +172,16 @@ local function CreateESP(obj)
         Enum.Font.GothamBold
 
     txt.TextSize = 14
+    txt.TextScaled = false
+    txt.TextStrokeTransparency = 1
 
     txt.Text =
         math.floor(progress + 0.5)
         .. "%"
 
-    ------------------------------------------------
-    -- CACHE
-    ------------------------------------------------
 
-    Cache[obj] = {
-        Highlight = esp,
-        Gui = gui,
-        Text = txt
-    }
-
-    ------------------------------------------------
-    -- UPDATE
-    ------------------------------------------------
-
-    obj:GetAttributeChangedSignal(
+    local attrConnection =
+        obj:GetAttributeChangedSignal(
         "RepairProgress"
     ):Connect(function()
 
@@ -222,11 +200,28 @@ local function CreateESP(obj)
         end
 
         new =
-            math.floor(new + 0.5)
+            math.clamp(
+                math.floor(new + 0.5),
+                0,
+                100
+            )
 
-        if new >= 100 then
+        if new >= 99.5 then
 
-            RemoveESP(obj)
+            local cache =
+                Cache[obj]
+
+            if cache then
+
+                cache.Text.Text =
+                    "100%"
+            end
+
+            task.delay(0.3,function()
+
+                RemoveESP(obj)
+
+            end)
 
             return
         end
@@ -240,11 +235,16 @@ local function CreateESP(obj)
                 new .. "%"
         end
     end)
+
+
+    Cache[obj] = {
+        Highlight = esp,
+        Gui = gui,
+        Text = txt,
+        Connection = attrConnection
+    }
 end
 
-------------------------------------------------
--- SCAN
-------------------------------------------------
 
 local function Scan()
 
@@ -269,16 +269,13 @@ local function Scan()
         if obj:IsA("Model")
         and typeof(progress)
         == "number"
-        and progress < 100 then
+        and progress < 99.5 then
 
             CreateESP(obj)
         end
     end
 end
 
-------------------------------------------------
--- CLEAR
-------------------------------------------------
 
 local function Clear()
 
@@ -288,9 +285,6 @@ local function Clear()
     end
 end
 
-------------------------------------------------
--- LOOP
-------------------------------------------------
 
 task.spawn(function()
 
@@ -326,7 +320,7 @@ task.spawn(function()
                     map.DescendantAdded
                     :Connect(function(obj)
 
-                    task.wait(0.1)
+                    task.defer(function()
 
                     local progress =
                         obj:GetAttribute(
@@ -338,12 +332,23 @@ task.spawn(function()
                     )
                     and typeof(progress)
                     == "number"
-                    and progress < 100 then
+                    and progress < 99.5 then
 
                         CreateESP(obj)
                     end
+                end)
                 end)
             end
         end
     end
 end)
+
+workspace.ChildRemoved:Connect(function(v)
+
+    if v.Name == "Map" then
+
+        Clear()
+    end
+end)
+
+return true

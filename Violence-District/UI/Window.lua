@@ -14,20 +14,14 @@ function Window:Create(title)
         game.CoreGui.FalHub:Destroy()
     end
 
-    ------------------------------------------------
-    -- GUI
-    ------------------------------------------------
 
     local ScreenGui =
         Instance.new("ScreenGui")
 
-    ScreenGui.Name = "Fal Hub"
+    ScreenGui.Name = "FalHub"
     ScreenGui.Parent = game.CoreGui
     ScreenGui.ResetOnSpawn = false
 
-    ------------------------------------------------
-    -- MAIN
-    ------------------------------------------------
 
     local Main =
         Instance.new("Frame")
@@ -56,9 +50,6 @@ function Window:Create(title)
     ).CornerRadius =
         UDim.new(0,12)
 
-    ------------------------------------------------
-    -- TOPBAR
-    ------------------------------------------------
 
     local Top =
         Instance.new("Frame")
@@ -79,9 +70,6 @@ function Window:Create(title)
     ).CornerRadius =
         UDim.new(0,12)
 
-    ------------------------------------------------
-    -- TITLE
-    ------------------------------------------------
 
     local Title =
         Instance.new("TextLabel")
@@ -109,9 +97,6 @@ function Window:Create(title)
     Title.TextXAlignment =
         Enum.TextXAlignment.Left
 
-    ------------------------------------------------
-    -- BUTTON
-    ------------------------------------------------
 
     local function CreateButton(
         txt,
@@ -158,9 +143,6 @@ function Window:Create(title)
         return b
     end
 
-    ------------------------------------------------
-    -- MINIMIZE
-    ------------------------------------------------
 
     local Minimize =
         CreateButton(
@@ -190,9 +172,6 @@ function Window:Create(title)
             )
         )
 
-    ------------------------------------------------
-    -- SIDEBAR
-    ------------------------------------------------
 
     local Sidebar =
         Instance.new("Frame")
@@ -227,9 +206,6 @@ function Window:Create(title)
     SidebarLayout.Padding =
         UDim.new(0,8)
 
-    ------------------------------------------------
-    -- PAGES
-    ------------------------------------------------
 
     local Pages =
         Instance.new("Frame")
@@ -244,9 +220,6 @@ function Window:Create(title)
 
     Pages.BackgroundTransparency = 1
 
-    ------------------------------------------------
-    -- DRAG
-    ------------------------------------------------
 
     local dragging = false
     local dragStart
@@ -295,9 +268,6 @@ function Window:Create(title)
         end
     end)
 
-    ------------------------------------------------
-    -- MINIMIZE
-    ------------------------------------------------
 
     local minimized = false
 
@@ -333,9 +303,6 @@ function Window:Create(title)
         end
     end)
 
-    ------------------------------------------------
-    -- CLOSE
-    ------------------------------------------------
 
     Close.MouseButton1Click:Connect(function()
 
@@ -343,9 +310,6 @@ function Window:Create(title)
 
     end)
 
-    ------------------------------------------------
-    -- RETURN
-    ------------------------------------------------
 
     return {
         Gui = ScreenGui,

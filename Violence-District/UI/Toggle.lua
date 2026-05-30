@@ -25,9 +25,6 @@ function Toggle:Create(
     ).CornerRadius =
         UDim.new(0,10)
 
-    ------------------------------------------------
-    -- LABEL
-    ------------------------------------------------
 
     local Label =
         Instance.new("TextLabel")
@@ -55,9 +52,6 @@ function Toggle:Create(
     Label.TextXAlignment =
         Enum.TextXAlignment.Left
 
-    ------------------------------------------------
-    -- BUTTON
-    ------------------------------------------------
 
     local Button =
         Instance.new("TextButton")
@@ -83,9 +77,6 @@ function Toggle:Create(
     ).CornerRadius =
         UDim.new(1,0)
 
-    ------------------------------------------------
-    -- CIRCLE
-    ------------------------------------------------
 
     local Circle =
         Instance.new("Frame")
@@ -109,9 +100,6 @@ function Toggle:Create(
     ).CornerRadius =
         UDim.new(1,0)
 
-    ------------------------------------------------
-    -- TOGGLE
-    ------------------------------------------------
 
     local Enabled = false
 

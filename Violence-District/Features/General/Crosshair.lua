@@ -11,9 +11,6 @@ local Config =
         .Config
     )
 
-------------------------------------------------
--- DOT
-------------------------------------------------
 
 local Dot =
     Drawing.new("Circle")
@@ -32,9 +29,6 @@ Dot.Color =
 
 Dot.Transparency = 1
 
-------------------------------------------------
--- LOOP
-------------------------------------------------
 
 RunService.RenderStepped:Connect(function()
 
@@ -59,3 +53,5 @@ RunService.RenderStepped:Connect(function()
 
     Dot.Visible = true
 end)
+
+return true

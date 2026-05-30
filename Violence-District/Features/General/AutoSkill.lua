@@ -24,9 +24,6 @@ local Config =
         .Config
     )
 
-------------------------------------------------
--- HANDLER
-------------------------------------------------
 
 local QTEHandler = {
     Monitoring = false,
@@ -35,9 +32,9 @@ local QTEHandler = {
     Elements = nil
 }
 
-------------------------------------------------
--- INPUT
-------------------------------------------------
+local LastPrompt = nil
+local LastSkillCheck = 0
+
 
 local function PressSpace()
 
@@ -60,9 +57,6 @@ local function PressSpace()
     end)
 end
 
-------------------------------------------------
--- GET UI
-------------------------------------------------
 
 local function GetUI()
 
@@ -94,16 +88,28 @@ local function GetUI()
         return nil
     end
 
+    local needle =
+        frame:FindFirstChild(
+            "Line"
+        )
+
+    local target =
+        frame:FindFirstChild(
+            "Goal"
+        )
+
+    if not needle
+    or not target then
+        return nil
+    end
+
     return {
         frame = frame,
-        needle = frame:FindFirstChild("Line"),
-        target = frame:FindFirstChild("Goal")
+        needle = needle,
+        target = target
     }
 end
 
-------------------------------------------------
--- PERFECT
-------------------------------------------------
 
 local function InZone(
     needleAngle,
@@ -134,9 +140,6 @@ local function InZone(
         and needle <= ending
 end
 
-------------------------------------------------
--- STOP
-------------------------------------------------
 
 local function Stop()
 
@@ -151,9 +154,6 @@ local function Stop()
     QTEHandler.Monitoring = false
 end
 
-------------------------------------------------
--- UPDATE
-------------------------------------------------
 
 local function Update()
 
@@ -168,6 +168,7 @@ local function Update()
         QTEHandler.Elements
 
     if not ui
+    or not ui.frame
     or not ui.needle
     or not ui.target then
 
@@ -176,20 +177,33 @@ local function Update()
         return
     end
 
+    if not ui.frame.Parent then
+
+        Stop()
+
+        QTEHandler.Elements = nil
+
+        return
+    end
+
+    if not ui.frame.Visible then
+        return
+    end
+
     if InZone(
         ui.needle.Rotation,
         ui.target.Rotation
     ) then
 
-        PressSpace()
+        if tick() - LastSkillCheck > 0.2 then
 
-        Stop()
+            LastSkillCheck = tick()
+
+            PressSpace()
+        end
     end
 end
 
-------------------------------------------------
--- START
-------------------------------------------------
 
 local function Start()
 
@@ -200,13 +214,10 @@ local function Start()
     QTEHandler.Monitoring = true
 
     QTEHandler.FrameConn =
-        RunService.Heartbeat
+        RunService.RenderStepped
         :Connect(Update)
 end
 
-------------------------------------------------
--- VISIBLE
-------------------------------------------------
 
 local function Visible()
 
@@ -220,9 +231,15 @@ local function Visible()
     local ui =
         QTEHandler.Elements
 
-    if ui
-    and ui.frame
-    and ui.frame.Visible then
+    if not ui
+    or not ui.frame then
+
+        Stop()
+
+        return
+    end
+
+    if ui.frame.Visible then
 
         Start()
 
@@ -232,9 +249,6 @@ local function Visible()
     end
 end
 
-------------------------------------------------
--- SETUP
-------------------------------------------------
 
 local function Setup()
 
@@ -252,13 +266,15 @@ local function Setup()
 
         local ui = GetUI()
 
-        if not ui
-        or not ui.frame
-        or not ui.needle
-        or not ui.target then
+        if not ui then
             return
         end
 
+        if LastPrompt == ui.frame then
+            return
+        end
+
+        LastPrompt = ui.frame
         QTEHandler.Elements = ui
 
         QTEHandler.UIConn =
@@ -267,23 +283,77 @@ local function Setup()
                 "Visible"
             )
             :Connect(Visible)
+
+        if ui.frame.Visible then
+
+            Start()
+        end
     end)
 end
 
-------------------------------------------------
--- RECONNECT
-------------------------------------------------
+
+local function Reconnect()
+
+    if not Config.AutoSkill then
+        return
+    end
+
+    local ui = GetUI()
+
+    if not ui
+    or not ui.frame then
+        return
+    end
+
+    if LastPrompt == ui.frame then
+        return
+    end
+
+    QTEHandler.Elements = nil
+
+    Setup()
+end
+
+
+LocalPlayer.PlayerGui.ChildAdded:Connect(function(v)
+
+    if not Config.AutoSkill then
+        return
+    end
+
+    if v.Name == "SkillCheckPromptGui" then
+
+        task.defer(Reconnect)
+    end
+end)
+
+LocalPlayer.CharacterAdded:Connect(function()
+
+    if Config.AutoSkill then
+
+        task.defer(Reconnect)
+    end
+end)
+
+workspace.ChildAdded:Connect(function(v)
+
+    if Config.AutoSkill
+    and v.Name == "Map" then
+
+        task.defer(Reconnect)
+    end
+end)
 
 task.spawn(function()
 
-    while task.wait(2) do
+    while task.wait(1) do
 
-        if Config.AutoSkill then
+        if Config.AutoSkill
+        and not QTEHandler.Elements then
 
-            if not QTEHandler.Elements then
-
-                Setup()
-            end
+            Setup()
         end
     end
 end)
+
+return true
