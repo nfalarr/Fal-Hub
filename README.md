@@ -15,7 +15,7 @@ Fal Hub dibuat untuk menyediakan script Roblox yang ringan, stabil, dan mudah di
 
 ## Status
 
-🚧 Dalam Pengembangan Aktif
+Dalam Pengembangan Aktif
 
 Dukungan game dan fitur baru akan terus ditambahkan seiring berjalannya pengembangan.
 
@@ -25,4 +25,4 @@ Saran, masukan, dan laporan bug sangat diterima untuk membantu pengembangan Fal 
 
 ## Author
 
-Made with ❤️ by nfalarr
+Made by nfalarr
