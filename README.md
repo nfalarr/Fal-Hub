@@ -22,7 +22,3 @@ Dukungan game dan fitur baru akan terus ditambahkan seiring berjalannya pengemba
 ## Kontribusi
 
 Saran, masukan, dan laporan bug sangat diterima untuk membantu pengembangan Fal Hub.
-
-## Author
-
-Made by nfalarr
