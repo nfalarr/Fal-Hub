@@ -1,9 +1,6 @@
 # Release.lua
 
 ```lua
-------------------------------------------------
--- SERVICES
-------------------------------------------------
 
 local Players = game:GetService("Players")
 local RunService = game:GetService("RunService")
@@ -12,22 +9,13 @@ local VIM = game:GetService("VirtualInputManager")
 
 local LocalPlayer = Players.LocalPlayer
 
-------------------------------------------------
--- CONFIG
-------------------------------------------------
 
 local Config = {
 
-    ------------------------------------------------
-    -- GENERAL
-    ------------------------------------------------
 
     Crosshair = false,
     AutoSkill = false,
 
-    ------------------------------------------------
-    -- VISUALS
-    ------------------------------------------------
 
     SurvivorESP = false,
     KillerESP = false,
@@ -38,9 +26,6 @@ local Config = {
     WindowESP = false
 }
 
-------------------------------------------------
--- GUI
-------------------------------------------------
 
 if game.CoreGui:FindFirstChild("FalHub") then
     game.CoreGui.FalHub:Destroy()
@@ -51,9 +36,6 @@ ScreenGui.Name = "FalHub"
 ScreenGui.Parent = game.CoreGui
 ScreenGui.ResetOnSpawn = false
 
-------------------------------------------------
--- MAIN
-------------------------------------------------
 
 local Main = Instance.new("Frame")
 Main.Parent = ScreenGui
@@ -64,9 +46,6 @@ Main.BorderSizePixel = 0
 
 Instance.new("UICorner", Main).CornerRadius = UDim.new(0,12)
 
-------------------------------------------------
--- TOPBAR
-------------------------------------------------
 
 local Top = Instance.new("Frame")
 Top.Parent = Main
@@ -87,9 +66,6 @@ Title.Font = Enum.Font.GothamBold
 Title.TextSize = 15
 Title.TextXAlignment = Enum.TextXAlignment.Left
 
-------------------------------------------------
--- BUTTONS
-------------------------------------------------
 
 local function CreateButton(txt,pos,color)
 
@@ -122,9 +98,6 @@ local Close = CreateButton(
     Color3.fromRGB(255,100,100)
 )
 
-------------------------------------------------
--- SIDEBAR
-------------------------------------------------
 
 local Sidebar = Instance.new("Frame")
 Sidebar.Parent = Main
@@ -139,9 +112,6 @@ local SidebarLayout = Instance.new("UIListLayout")
 SidebarLayout.Parent = Sidebar
 SidebarLayout.Padding = UDim.new(0,8)
 
-------------------------------------------------
--- PAGES
-------------------------------------------------
 
 local Pages = Instance.new("Frame")
 Pages.Parent = Main
@@ -149,9 +119,6 @@ Pages.Position = UDim2.new(0,140,0,55)
 Pages.Size = UDim2.new(1,-150,1,-65)
 Pages.BackgroundTransparency = 1
 
-------------------------------------------------
--- TABS
-------------------------------------------------
 
 local function CreateTab(name)
 
@@ -199,9 +166,6 @@ local SettingsPage = CreateTab("Settings")
 
 VisualsPage.Visible = true
 
-------------------------------------------------
--- TOGGLE
-------------------------------------------------
 
 local function CreateToggle(parent,name,callback)
 
@@ -270,9 +234,6 @@ local function CreateToggle(parent,name,callback)
     end)
 end
 
-------------------------------------------------
--- DRAGGING
-------------------------------------------------
 
 local dragging = false
 local dragStart
@@ -310,9 +271,6 @@ UIS.InputChanged:Connect(function(input)
     end
 end)
 
-------------------------------------------------
--- MINIMIZE
-------------------------------------------------
 
 local minimized = false
 
@@ -340,9 +298,6 @@ Close.MouseButton1Click:Connect(function()
     ScreenGui:Destroy()
 end)
 
-------------------------------------------------
--- CROSSHAIR
-------------------------------------------------
 
 local Dot = Drawing.new("Circle")
 Dot.Visible = false
@@ -368,9 +323,6 @@ RunService.RenderStepped:Connect(function()
     Dot.Visible = true
 end)
 
-------------------------------------------------
--- AUTO SKILL CHECK
-------------------------------------------------
 
 local QTEHandler = {
     Monitoring = false,
@@ -564,9 +516,6 @@ task.spawn(function()
     end
 end)
 
-------------------------------------------------
--- TOGGLES
-------------------------------------------------
 
 CreateToggle(
     GeneralPage,
@@ -608,9 +557,6 @@ CreateToggle(
     end
 )
 
-------------------------------------------------
--- SURVIVOR ESP
-------------------------------------------------
 
 local SurvivorCache = {}
 
@@ -688,9 +634,6 @@ task.spawn(function()
     end
 end)
 
-------------------------------------------------
--- KILLER ESP
-------------------------------------------------
 
 local KillerCache = {}
 
@@ -768,9 +711,6 @@ task.spawn(function()
     end
 end)
 
-------------------------------------------------
--- GENERATOR ESP
-------------------------------------------------
 
 local GeneratorCache = {}
 
@@ -845,9 +785,6 @@ local function CreateGeneratorESP(obj)
 
     esp.Parent = obj
 
-    ------------------------------------------------
-    -- GUI
-    ------------------------------------------------
 
     local gui =
         Instance.new(
@@ -1003,9 +940,6 @@ task.spawn(function()
     end
 end)
 
-------------------------------------------------
--- SIMPLE OBJECT ESP
-------------------------------------------------
 
 local function CreateObjectESP(
     configName,
@@ -1094,9 +1028,6 @@ local function CreateObjectESP(
     end)
 end
 
-------------------------------------------------
--- GATE ESP
-------------------------------------------------
 
 CreateObjectESP(
     "GateESP",
@@ -1108,9 +1039,6 @@ CreateObjectESP(
     )
 )
 
-------------------------------------------------
--- HOOK ESP
-------------------------------------------------
 
 CreateObjectESP(
     "HookESP",
@@ -1122,9 +1050,6 @@ CreateObjectESP(
     )
 )
 
-------------------------------------------------
--- PALLET ESP
-------------------------------------------------
 
 CreateObjectESP(
     "PalletESP",
@@ -1136,9 +1061,6 @@ CreateObjectESP(
     )
 )
 
-------------------------------------------------
--- WINDOW ESP
-------------------------------------------------
 
 CreateObjectESP(
     "WindowESP",
