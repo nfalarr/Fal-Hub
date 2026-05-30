@@ -1,4 +1,4 @@
-# 🚀 Fal Hub
+# Fal Hub 🚀 
 
 Fal Hub adalah kumpulan script Lua Roblox untuk berbagai game dengan fokus pada performa, stabilitas, dan kemudahan penggunaan.
 
