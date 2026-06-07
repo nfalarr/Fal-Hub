@@ -25,6 +25,7 @@ Fal Hub adalah kumpulan script Lua Roblox untuk berbagai game dengan fokus pada 
 Saat ini repository ini berisi script untuk beberapa game Roblox, antara lain:
 
 * Violence District
+* StegaSecure
 * (Game lainnya akan ditambahkan)
 
 ## Tujuan
