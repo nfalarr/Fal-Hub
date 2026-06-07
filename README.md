@@ -1,4 +1,22 @@
-# Fal Hub 🚀 
+# Fal Hub
+
+<p align="center">
+  <a href="https://github.com/nfalarr/Fal-Hub">
+    <img src="https://img.shields.io/badge/status-active_development-brightgreen" alt="Status: Active Development">
+  </a>
+  <a href="https://www.lua.org/">
+    <img src="https://img.shields.io/badge/language-Lua-2C2D72?logo=lua&logoColor=white" alt="Language: Lua">
+  </a>
+  <a href="https://github.com/nfalarr/Fal-Hub/commits/main">
+    <img src="https://img.shields.io/github/last-commit/nfalarr/Fal-Hub" alt="Last Commit">
+  </a>
+  <a href="https://github.com/nfalarr/Fal-Hub">
+    <img src="https://img.shields.io/github/repo-size/nfalarr/Fal-Hub" alt="Repository Size">
+  </a>
+  <a href="https://github.com/nfalarr/Fal-Hub/stargazers">
+    <img src="https://img.shields.io/github/stars/nfalarr/Fal-Hub?style=flat" alt="GitHub Stars">
+  </a>
+</p>
 
 Fal Hub adalah kumpulan script Lua Roblox untuk berbagai game dengan fokus pada performa, stabilitas, dan kemudahan penggunaan.
 
