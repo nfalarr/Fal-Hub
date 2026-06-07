@@ -8,10 +8,10 @@
     <img src="https://img.shields.io/badge/language-Lua-2C2D72?logo=lua&logoColor=white" alt="Language: Lua">
   </a>
   <a href="https://github.com/nfalarr/Fal-Hub/commits/main">
-    <img src="https://img.shields.io/github/last-commit/nfalarr/Fal-Hub" alt="Last Commit">
+    <img src="https://img.shields.io/badge/branch-main-blue?logo=github" alt="Branch: Main">
   </a>
   <a href="https://github.com/nfalarr/Fal-Hub">
-    <img src="https://img.shields.io/github/repo-size/nfalarr/Fal-Hub" alt="Repository Size">
+    <img src="https://img.shields.io/badge/repository-public-blue?logo=github" alt="Repository: Public">
   </a>
   <a href="https://github.com/nfalarr/Fal-Hub/stargazers">
     <img src="https://img.shields.io/github/stars/nfalarr/Fal-Hub?style=flat" alt="GitHub Stars">
