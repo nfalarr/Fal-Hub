@@ -1,4 +1,4 @@
-# Fal Hub
+# Fal Hub 📱
 
 <p align="center">
   <a href="https://github.com/nfalarr/Fal-Hub">
