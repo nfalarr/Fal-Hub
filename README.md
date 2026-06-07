@@ -1,4 +1,4 @@
-# Fal Hub 📱
+<h1 align="center">Fal Hub 📱</h1>
 
 <p align="center">
   <a href="https://github.com/nfalarr/Fal-Hub">
